@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css_files/style.css') }}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    
+</head>
+
+      <center><h2>Game Ratings</h2></center>
+      <center><h2>Welcome {{user.first_name}}</h2></center>
+      <center><h2>Welcome {{user.id}}</h2></center>
+      <body class="Rating">
+      <div class="container">
+        {% for game in games %}
+          <div class="row">
+            <div class="col-sm">
+              <p>{{game.game_name}}</p>
+              <p>{{game.description}}</p>
+              <p>{{game.protagonist}}</p>
+              <p>{{game.color}}</p>
+              <p><img src="{{game.imagelink}}"></p>
+            </div>
+          </div>
+          {% if not game.reviewed %}
+          <form action="/new/review/{{game.id}}/submit" method="post" >
+            <div class="row align-items-center">
+              <div class="col">
+                  <div class="row mb-3">
+                      <label for="review" class="col-sm-2 col-form-label">Review:</label>
+                      <input type="comment" class="form-control" name="review">
+                  </div>
+                  <div class="row mb-3">
+                      <label for="rating" class="col-sm-2 col-form-label">Rating out of 10:</label>
+                      <input type="number" class="form-control" name="rating">
+                  </div>
+                  <div class="row mb-3">
+                    <input type="submit" value="Submit" class="btn btn-success">
+                  </div>
+              </div>
+            </div>
+          </form>
+          {% endif %}
+
+          {% for gamereview in game.reviews %}
+            <div>
+              <p>{{gamereview.author_id}}</p>
+              <p>{{gamereview.review}}</p>
+              <p>{{gamereview.rating}}</p>
+            </div>
+            {% if user.id == gamereview.author_id %}
+              <form>
+                <div class="col"></div>
+                  <div class="row mb-3">
+                    <a href= "/review/edit/{{gamereview.id}}">edit</a>
+                    
+                  </div>
+                  <div class="row mb-3">
+                    
+                    <a href= "/review/delete/{{gamereview.id}}">delete</a>
+                  </div>
+                  
+                  
+                  </div>
+                </div>
+              </form>
+            {% endif %}
+          {% endfor %}
+        {% endfor %}
+        
+      </div>
+    </div>
+    <div class="container">
+    {% for sighting in sightings %}
+      <div class="row">
+        <div class="col-sm">
+          <p>{{game.game_name}}</p>
+          <p>{{game.description}}</p>
+        </div>
+        <div class="col-sm">
+          {% if user.id == comment.posted_by %}
+          
+        {% else %}
+          <a href= "/show/{{game.id}}">view</a>
+        {% endif %}
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+
+
+</body>
+</html>

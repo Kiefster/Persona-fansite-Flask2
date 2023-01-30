@@ -1,0 +1,32 @@
+body {
+  padding: 25px;
+  font-size: 25px;
+
+ /*
+font-style: ;
+
+*/
+
+ background-image: url("https://i.imgur.com/NqQh1XD.jpg");
+ 
+
+}
+
+
+  
+  background-image {
+  max-width: 800px
+  }
+
+  .text-light {
+    color: red;
+}
+
+input[type="submit"] {
+  background-color: red;
+}
+
+
+
+
+  
